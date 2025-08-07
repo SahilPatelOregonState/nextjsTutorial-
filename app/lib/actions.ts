@@ -1,10 +1,19 @@
 'use server';
+import * as z from 'zod'
+import { date } from 'zod/v4';
+import { id } from 'zod/v4/locales';
 
-// Because this is a server function/component it must be async
-// customer_id UUID NOT NULL,
-//       amount INT NOT NULL,
-//       status VARCHAR(255) NOT NULL,
-//       date DATE NOT NULL,
+const FormSchema = z.object({
+    id:z.string(),
+    customerId: z.number(),
+    amount:z.number(),
+    status:z.enum(["pending", "paid"]),
+    date: z.string()
+})
+
+const CreateInvoice = FormSchema.omit({id: true, date:true})
+
+
 
 // export type Invoice = {
 //   id: string;
